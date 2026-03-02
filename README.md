@@ -52,7 +52,7 @@ Overfitting is measured as:
 
 ---
 
-## 🚨 Data Leakage Consideration
+## Data Leakage Consideration
 The variable **duration** represents the call duration.
 
 Since this information is only available after the call is completed:
@@ -62,7 +62,7 @@ Since this information is only available after the call is completed:
 
 ---
 
-## 🗂 Repository Structure
+## Repository Structure
 ```
 .
 ├── app/                # Streamlit application
