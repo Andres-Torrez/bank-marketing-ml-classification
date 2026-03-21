@@ -1,0 +1,56 @@
+{
+    "dummy_most_frequent": {
+        "model_name": "dummy_most_frequent",
+        "drop_leakage": true,
+        "dropped_columns": [
+            "duration"
+        ],
+        "cv_metrics": {
+            "train_accuracy": 0.8830181376422024,
+            "cv_accuracy": 0.8830181385725526,
+            "gap_accuracy": -9.303502412905118e-10,
+            "train_precision": 0.0,
+            "cv_precision": 0.0,
+            "gap_precision": 0.0,
+            "train_recall": 0.0,
+            "cv_recall": 0.0,
+            "gap_recall": 0.0,
+            "train_f1": 0.0,
+            "cv_f1": 0.0,
+            "gap_f1": 0.0,
+            "train_roc_auc": 0.5,
+            "cv_roc_auc": 0.5,
+            "gap_roc_auc": 0.0
+        },
+        "test_size": 0.2,
+        "random_state": 42,
+        "n_splits": 5
+    },
+    "logistic_regression": {
+        "model_name": "logistic_regression",
+        "drop_leakage": true,
+        "dropped_columns": [
+            "duration"
+        ],
+        "cv_metrics": {
+            "train_accuracy": 0.8924048896059891,
+            "cv_accuracy": 0.8921699078284524,
+            "gap_accuracy": 0.00023498177753666916,
+            "train_precision": 0.6475608982037013,
+            "cv_precision": 0.6446365727663443,
+            "gap_precision": 0.0029243254373569894,
+            "train_recall": 0.17608125473598932,
+            "cv_recall": 0.1749023810919362,
+            "gap_recall": 0.0011788736440531133,
+            "train_f1": 0.2768700783337781,
+            "cv_f1": 0.2749081138247547,
+            "gap_f1": 0.0019619645090233617,
+            "train_roc_auc": 0.7669708418103248,
+            "cv_roc_auc": 0.7628273370499828,
+            "gap_roc_auc": 0.004143504760341976
+        },
+        "test_size": 0.2,
+        "random_state": 42,
+        "n_splits": 5
+    }
+}
