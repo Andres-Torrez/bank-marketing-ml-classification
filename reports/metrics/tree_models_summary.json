@@ -1,0 +1,82 @@
+{
+    "decision_tree": {
+        "model_name": "decision_tree",
+        "drop_leakage": true,
+        "dropped_columns": [
+            "duration"
+        ],
+        "cv_metrics": {
+            "train_accuracy": 0.896510726060988,
+            "cv_accuracy": 0.8927781772794271,
+            "gap_accuracy": 0.0037325487815609293,
+            "train_precision": 0.7037916771212266,
+            "cv_precision": 0.6485669158191488,
+            "gap_precision": 0.05522476130207776,
+            "train_recall": 0.19912533042801123,
+            "cv_recall": 0.18293629860361002,
+            "gap_recall": 0.016189031824401207,
+            "train_f1": 0.31025834699566684,
+            "cv_f1": 0.28497798760816784,
+            "gap_f1": 0.025280359387499007,
+            "train_roc_auc": 0.7175693705825792,
+            "cv_roc_auc": 0.7069412892198559,
+            "gap_roc_auc": 0.010628081362723307
+        },
+        "test_metrics": {
+            "accuracy": 0.8928452947030853,
+            "precision": 0.6344410876132931,
+            "recall": 0.19848771266540643,
+            "f1": 0.3023758099352052,
+            "roc_auc": 0.7143701623909668
+        },
+        "confusion_matrix": {
+            "tn": 7864,
+            "fp": 121,
+            "fn": 848,
+            "tp": 210
+        },
+        "test_size": 0.2,
+        "random_state": 42,
+        "n_splits": 5
+    },
+    "random_forest": {
+        "model_name": "random_forest",
+        "drop_leakage": true,
+        "dropped_columns": [
+            "duration"
+        ],
+        "cv_metrics": {
+            "train_accuracy": 0.8954600759868585,
+            "cv_accuracy": 0.8939947123590036,
+            "gap_accuracy": 0.0014653636278548765,
+            "train_precision": 0.7258761505244794,
+            "cv_precision": 0.6980658354185222,
+            "gap_precision": 0.027810315105957217,
+            "train_recall": 0.17094052819594163,
+            "cv_recall": 0.16544583720599199,
+            "gap_recall": 0.0054946909899496466,
+            "train_f1": 0.2767033654914629,
+            "cv_f1": 0.2673780025983101,
+            "gap_f1": 0.009325362893152778,
+            "train_roc_auc": 0.8250879427390887,
+            "cv_roc_auc": 0.7900254835081482,
+            "gap_roc_auc": 0.035062459230940535
+        },
+        "test_metrics": {
+            "accuracy": 0.8947252018135574,
+            "precision": 0.7172131147540983,
+            "recall": 0.16540642722117202,
+            "f1": 0.26881720430107525,
+            "roc_auc": 0.7967794648046372
+        },
+        "confusion_matrix": {
+            "tn": 7916,
+            "fp": 69,
+            "fn": 883,
+            "tp": 175
+        },
+        "test_size": 0.2,
+        "random_state": 42,
+        "n_splits": 5
+    }
+}
