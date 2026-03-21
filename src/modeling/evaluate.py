@@ -2,9 +2,9 @@ from __future__ import annotations
 
 from typing import Dict
 
-import numpy as np
 from sklearn.metrics import (
     accuracy_score,
+    confusion_matrix,
     f1_score,
     precision_score,
     recall_score,
@@ -19,20 +19,6 @@ def compute_classification_metrics(
 ) -> Dict[str, float]:
     """
     Compute core classification metrics.
-
-    Parameters
-    ----------
-    y_true : array-like
-        Ground truth labels.
-    y_pred : array-like
-        Predicted class labels.
-    y_proba : array-like
-        Predicted probabilities for positive class.
-
-    Returns
-    -------
-    dict
-        Dictionary with evaluation metrics.
     """
     metrics = {
         "accuracy": float(accuracy_score(y_true, y_pred)),
@@ -49,3 +35,16 @@ def compute_overfitting_gap(train_score: float, cv_score: float) -> float:
     Compute overfitting gap as train - validation.
     """
     return float(train_score - cv_score)
+
+
+def compute_confusion_matrix_dict(y_true, y_pred) -> Dict[str, int]:
+    """
+    Return confusion matrix as a serializable dictionary.
+    """
+    tn, fp, fn, tp = confusion_matrix(y_true, y_pred).ravel()
+    return {
+        "tn": int(tn),
+        "fp": int(fp),
+        "fn": int(fn),
+        "tp": int(tp),
+    }

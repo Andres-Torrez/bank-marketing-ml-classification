@@ -11,7 +11,11 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import StratifiedKFold, cross_validate
 from sklearn.pipeline import Pipeline
 
-from src.modeling.evaluate import compute_overfitting_gap
+from src.modeling.evaluate import (
+    compute_classification_metrics,
+    compute_confusion_matrix_dict,
+    compute_overfitting_gap,
+)
 from src.preprocessing.data_split import (
     TARGET_COL,
     load_dataset,
@@ -36,9 +40,6 @@ def ensure_directories() -> None:
 
 
 def get_models() -> Dict[str, Any]:
-    """
-    Return baseline candidate models.
-    """
     return {
         "dummy_most_frequent": DummyClassifier(strategy="most_frequent"),
         "logistic_regression": LogisticRegression(
@@ -49,9 +50,6 @@ def get_models() -> Dict[str, Any]:
 
 
 def evaluate_model_cv(model_pipeline: Pipeline, X_train, y_train) -> Dict[str, float]:
-    """
-    Evaluate a pipeline using stratified cross-validation.
-    """
     cv = StratifiedKFold(
         n_splits=N_SPLITS,
         shuffle=True,
@@ -91,11 +89,25 @@ def evaluate_model_cv(model_pipeline: Pipeline, X_train, y_train) -> Dict[str, f
 
 
 def fit_final_model(model_pipeline: Pipeline, X_train, y_train) -> Pipeline:
-    """
-    Fit model on full training set.
-    """
     model_pipeline.fit(X_train, y_train)
     return model_pipeline
+
+
+def evaluate_on_test(model_pipeline: Pipeline, X_test, y_test) -> Dict[str, Any]:
+    y_pred = model_pipeline.predict(X_test)
+
+    if hasattr(model_pipeline, "predict_proba"):
+        y_proba = model_pipeline.predict_proba(X_test)[:, 1]
+    else:
+        y_proba = y_pred
+
+    test_metrics = compute_classification_metrics(y_test, y_pred, y_proba)
+    conf_matrix = compute_confusion_matrix_dict(y_test, y_pred)
+
+    return {
+        "test_metrics": test_metrics,
+        "confusion_matrix": conf_matrix,
+    }
 
 
 def save_metrics(metrics: Dict[str, Any], filename: str) -> None:
@@ -131,12 +143,15 @@ def main() -> None:
 
         cv_metrics = evaluate_model_cv(pipeline, X_train, y_train)
         fitted_pipeline = fit_final_model(pipeline, X_train, y_train)
+        test_results = evaluate_on_test(fitted_pipeline, X_test, y_test)
 
         all_results[model_name] = {
             "model_name": model_name,
             "drop_leakage": True,
             "dropped_columns": ["duration"],
             "cv_metrics": cv_metrics,
+            "test_metrics": test_results["test_metrics"],
+            "confusion_matrix": test_results["confusion_matrix"],
             "test_size": 0.20,
             "random_state": RANDOM_STATE,
             "n_splits": N_SPLITS,
@@ -144,7 +159,7 @@ def main() -> None:
 
         save_metrics(
             all_results[model_name],
-            filename=f"{model_name}_cv_metrics.json",
+            filename=f"{model_name}_metrics.json",
         )
         save_model(
             fitted_pipeline,
@@ -155,7 +170,7 @@ def main() -> None:
     with open(summary_path, "w", encoding="utf-8") as f:
         json.dump(all_results, f, indent=4)
 
-    print("Baseline training completed.")
+    print("Baseline training and evaluation completed.")
     print(f"Saved metrics to: {METRICS_DIR}")
     print(f"Saved models to: {MODELS_DIR}")
 
