@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.venv/
+.ipynb_checkpoints/
+.git/
+.gitignore
+notebooks/
+reports/figures/
+tests/
