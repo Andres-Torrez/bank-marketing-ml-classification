@@ -1,7 +1,11 @@
 from __future__ import annotations
+import sys
+from pathlib import Path
 
 import streamlit as st
 from utils import load_model, build_input_dataframe
+from src.monitoring.feedback_logger import log_prediction
+
 
 st.set_page_config(
     page_title="Bank Marketing Predictor",
@@ -118,6 +122,12 @@ if st.button("Run Prediction", use_container_width=True):
         probability = model.predict_proba(input_df)[0][1]
     else:
         probability = None
+
+    log_prediction(
+        user_input=user_input,
+        prediction=int(prediction),
+        probability=float(probability) if probability is not None else None,
+    )
 
     st.subheader("Prediction Result")
 
