@@ -107,14 +107,14 @@ Acceptance criterion:
 
 ## 7. Final Model Performance
 
-**Selected model:** GradientBoostingClassifier
+**Selected model:** Tuned GradientBoostingClassifier
 
-**Cross-validation ROC-AUC:** 0.7921  
-**Test ROC-AUC:** 0.8019  
-**Overfitting gap:** 0.0147  
-**Test F1-score:** 0.3104  
-**Test Recall:** 0.2023  
-**Test Precision:** 0.6667  
+**Cross-validation ROC-AUC:** 0.7993  
+**Test ROC-AUC:** 0.8052 
+**Overfitting gap:** 0.0495  
+**Test F1-score:** 0.3805  
+**Test Recall:** 0.2694  
+**Test Precision:** 0.6477  
 **Test Accuracy:** 0.8948
 
 ### Interpretation
@@ -172,6 +172,6 @@ Pending for stronger production readiness:
 
 ## 12. Conclusion
 
-`GradientBoostingClassifier` was selected as the final production candidate because it provided the best trade-off between performance and stability under the project constraints.
+`Tuned GradientBoostingClassifierr` was selected as the final production candidate because it provided the best trade-off between performance and stability under the project constraints.
 
 The model is suitable for demonstration and portfolio-level deployment, with clear next steps for further improvement.
