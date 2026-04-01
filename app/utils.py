@@ -6,7 +6,7 @@ import pandas as pd
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-MODEL_PATH = PROJECT_ROOT / "models" / "gradient_boosting.joblib"
+MODEL_PATH = PROJECT_ROOT / "models" / "gradient_boosting_tuned.joblib"
 
 
 def load_model():
