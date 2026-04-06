@@ -1,40 +1,68 @@
 from __future__ import annotations
 
-from pathlib import Path
 from datetime import datetime
-import pandas as pd
 
-
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
-FEEDBACK_DIR = PROJECT_ROOT / "data" / "feedback"
-PREDICTIONS_LOG_PATH = FEEDBACK_DIR / "predictions_log.csv"
-
-
-def ensure_feedback_dir() -> None:
-    FEEDBACK_DIR.mkdir(parents=True, exist_ok=True)
+from src.monitoring.database import get_connection, initialize_database
 
 
 def log_prediction(user_input: dict, prediction: int, probability: float | None) -> None:
     """
-    Save a new prediction event to predictions_log.csv
+    Save a new prediction event into SQLite database.
     """
-    ensure_feedback_dir()
+    initialize_database()
 
-    row = {
-        **user_input,
-        "prediction": prediction,
-        "prediction_label": "yes" if prediction == 1 else "no",
-        "prediction_probability": probability,
-        "timestamp": datetime.utcnow().isoformat(),
-        "actual_label": None,
-    }
+    conn = get_connection()
+    cursor = conn.cursor()
 
-    row_df = pd.DataFrame([row])
+    cursor.execute(
+        """
+        INSERT INTO prediction_logs (
+            timestamp,
+            age,
+            job,
+            marital,
+            education,
+            default_status,
+            balance,
+            housing,
+            loan,
+            contact,
+            day,
+            month,
+            campaign,
+            pdays,
+            previous,
+            poutcome,
+            prediction,
+            prediction_label,
+            prediction_probability,
+            actual_label
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """,
+        (
+            datetime.utcnow().isoformat(),
+            user_input.get("age"),
+            user_input.get("job"),
+            user_input.get("marital"),
+            user_input.get("education"),
+            user_input.get("default"),
+            user_input.get("balance"),
+            user_input.get("housing"),
+            user_input.get("loan"),
+            user_input.get("contact"),
+            user_input.get("day"),
+            user_input.get("month"),
+            user_input.get("campaign"),
+            user_input.get("pdays"),
+            user_input.get("previous"),
+            user_input.get("poutcome"),
+            int(prediction),
+            "yes" if int(prediction) == 1 else "no",
+            float(probability) if probability is not None else None,
+            None,
+        ),
+    )
 
-    if PREDICTIONS_LOG_PATH.exists():
-        existing_df = pd.read_csv(PREDICTIONS_LOG_PATH)
-        updated_df = pd.concat([existing_df, row_df], ignore_index=True)
-    else:
-        updated_df = row_df
-
-    updated_df.to_csv(PREDICTIONS_LOG_PATH, index=False)
+    conn.commit()
+    conn.close()
