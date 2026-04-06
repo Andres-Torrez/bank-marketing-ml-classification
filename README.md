@@ -1,4 +1,3 @@
-```markdown
 # Bank Marketing Subscription Prediction — End-to-End ML System
 
 ![Python](https://img.shields.io/badge/Python-3.12-blue)
@@ -16,9 +15,8 @@
 ---
 
 ## Demo
-```markdown
 ![App Demo](docs/images/app.png)
-```
+
 
 ---
 
