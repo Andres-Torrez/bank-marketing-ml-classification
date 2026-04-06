@@ -1,9 +1,9 @@
 README.md
 pyproject.toml
-src/UNKNOWN.egg-info/PKG-INFO
-src/UNKNOWN.egg-info/SOURCES.txt
-src/UNKNOWN.egg-info/dependency_links.txt
-src/UNKNOWN.egg-info/top_level.txt
+src/bank_marketing_ml.egg-info/PKG-INFO
+src/bank_marketing_ml.egg-info/SOURCES.txt
+src/bank_marketing_ml.egg-info/dependency_links.txt
+src/bank_marketing_ml.egg-info/top_level.txt
 src/modeling/baseline_models.py
 src/modeling/boosting_models.py
 src/modeling/compare_models.py
